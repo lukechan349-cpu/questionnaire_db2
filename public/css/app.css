@@ -1,0 +1,235 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+:root{
+    --card-bg: rgba(255,255,255,0.85);
+    --accent: #1f8ceb;
+    --radius: 12px;
+}
+
+html,body{height:100%;margin:0}
+body{
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    background-color:#0b1020;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+.site-wrap{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px 20px;
+}
+.card{
+    width:100%;
+    max-width:980px;
+    background:var(--card-bg);
+    border-radius:var(--radius);
+    box-shadow:0 10px 30px rgba(2,6,23,0.6);
+    padding:28px;
+}
+
+h1{margin:0 0 12px 0;font-size:28px;color:#071026}
+h3{margin:0 0 8px 0;color:#071026}
+p{color:#0b1220}
+
+.btn{display:inline-block;padding:10px 16px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600}
+.question{margin-bottom:18px;padding:14px;border-radius:10px;background:rgba(255,255,255,0.9);}
+textarea{
+    width:100%;
+    box-sizing: border-box;
+    min-height:48px;
+    max-height:120px;
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid rgba(10,10,10,0.08);
+    resize:vertical;
+    overflow:auto;
+}
+ul{padding-left:18px;margin:6px 0}
+.submit-wrap{text-align:center;margin-top:18px}
+
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    margin-top: 6px;
+}
+.button-row .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    text-align: center;
+}
+
+#submit-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); align-items:center; justify-content:center; z-index:9999; }
+#submit-modal[style*="display: flex"] .modal-card { transform:scale(1); opacity:1; }
+#submit-modal .modal-card { background:white; padding:28px; border-radius:12px; max-width:440px; margin:20px; text-align:center; transform:scale(.96); opacity:0; transition: transform .18s ease, opacity .18s ease; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+.check { width:72px; height:72px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:#e9fff0; margin:0 auto 8px; border:2px solid #2aa84a; }
+.check svg { width:36px; height:36px; fill:none; stroke:#1f7f36; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:100; stroke-dashoffset:100; animation: dash .5s forwards .12s; }
+@keyframes dash { to { stroke-dashoffset: 0; } }
+
+
+.modal-card .modal-title { font-weight:600; margin:0 0 8px; }
+.modal-card .modal-sub { margin:0 0 12px; color:#666; font-size:13px; }
+.modal-card .modal-actions { display:flex; gap:12px; justify-content:center; margin-top:12px; }
+
+#history-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 1100;
+    padding: 40px 20px;
+}
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+}
+.modal-inner {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    margin: auto;
+    z-index: 1110;
+}
+.modal-content-box {
+    background: white;
+    border-radius: var(--radius);
+    padding: 24px;
+    max-height: calc(100vh - 80px);
+    overflow: auto;
+    box-shadow: 0 10px 30px rgba(2,6,23,0.3);
+}
+.modal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+.modal-title {
+    margin: 0;
+    font-size: 24px;
+    color: #071026;
+    font-weight: 600;
+}
+.modal-actions-inline {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.modal-actions-inline .small-btn {
+    font-size: 13px;
+    padding: 6px 12px;
+    color: #666;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 6px;
+    background: white;
+}
+.modal-actions-inline .icon-btn {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 18px;
+}
+.modal-actions-inline .icon-btn:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+
+#history-content {
+    color: #333;
+}
+#history-content .loading,
+#history-content em {
+    color: #666;
+    font-style: italic;
+}
+.history-item {
+    margin-bottom: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    background: #f8f8f8;
+}
+.history-item:last-child {
+    margin-bottom: 0;
+}
+.history-item strong {
+    display: block;
+    margin-bottom: 8px;
+    color: #071026;
+}
+.history-item .answer {
+    margin: 8px 0;
+    color: #333;
+    line-height: 1.5;
+}
+.history-item .meta {
+    margin-top: 8px;
+    color: #666;
+    font-size: 13px;
+}
+
+
+.lead { margin-bottom: 20px }
+.field-wrap { margin-top: 8px }
+.loading { color: #333 }
+.error { color: #900 }
+.mt-14 { margin-top: 14px }
+
+
+.question {
+    margin-bottom: 18px;
+    padding: 14px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.9);
+    transition: background-color 0.2s ease;
+}
+.question.unanswered {
+    background: rgba(255,245,245,0.9);
+    animation: shake 0.4s ease-in-out;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+
+.question.invalid {
+    background: rgba(255,235,235,0.95);
+    border: 1px solid rgba(224,107,107,0.9);
+}
+.question .error-msg {
+    margin-top: 10px;
+    color: #a00;
+    font-size: 13px;
+}
+.hint { margin-top:8px; color:#555; font-size:13px; }
