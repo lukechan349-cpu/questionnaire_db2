@@ -1,0 +1,52 @@
+services:
+  nginx:
+    build:
+      context: ./docker/nginx
+  
+    
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./questionnaire:/var/www/html # replace project_name with your desired value
+    depends_on:
+      - php
+
+  php:
+    build:
+      context: ./docker/php
+   
+    expose:
+      - "9000" # replaced 9001 if there is conflict on this port.
+    ports:
+      - "8081:9000" # replaced 9001 if there is conflict on this port.
+    volumes:
+      - ./questionnaire:/var/www/html # replace project_name with your desired value
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    build:
+      context: ./docker/mysql
+    platform: linux/x86_64
+    ports:
+      - "3307:3306" # host port changed to 3307 to avoid conflict with local MySQL
+    environment:
+      - "LANG=C.UTF-8"
+      - "MYSQL_ROOT_PASSWORD=root" # replaced password on your desired value
+      - "MYSQL_DATABASE=questionnaire_db" # use questionnaire_db as requested
+      - "MYSQL_PASSWORD=root"
+    command: --port=3306
+    volumes:
+      - type: volume
+        source: mysql-volume
+        target: /var/lib/mysql
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mysql-volume:
+    driver: local
